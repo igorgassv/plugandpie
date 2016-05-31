@@ -1,5 +1,5 @@
 import sys
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 VERSION = '0.0.0'
@@ -13,7 +13,7 @@ setup(
     author_email='villasv@outlook.com',
     license='GPLv3+',
     url='https://github.com/villasv/Plutonium',
-    packages=['plutonium'],
+    packages=find_packages(),
     long_description=open('README.md').read() + open('CHANGELOG.md').read(),
     classifiers=[
         "License :: OSI Approved :: GNU Affero General Public License v3 or "
