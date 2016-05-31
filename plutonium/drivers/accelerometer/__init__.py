@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from common.i2c import *
+from plutonium.common.i2c import *
 
 STANDARD_GRAVITY = 9.80665
 

@@ -1,7 +1,7 @@
 """Prints the accelerometer values every second."""
 import time
 import datetime
-from drivers.accelerometer.mma8452q import MMA8452Q
+from plutonium.drivers.accelerometer.mma8452q import MMA8452Q
 
 G_RANGE = 2
 INTERVAL = 0.5  # seconds

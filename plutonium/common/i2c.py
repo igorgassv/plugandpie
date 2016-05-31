@@ -1,7 +1,7 @@
 import sys
 import posix
 from fcntl import ioctl
-from common.linux_i2c import *
+from plutonium.common.linux_i2c import *
 import ctypes
 
 # Try to make this support Python 2 as well.
