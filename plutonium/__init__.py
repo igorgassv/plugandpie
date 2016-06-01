@@ -1,7 +1,7 @@
 import threading
 import time
 from plutonium.common.utils import i2c_addresses
-from plutonium.drivers.drivermapping import driver_map
+from plutonium.drivers.mapping import driver_map
 
 DEVICE_CHECK_INTERVAL = 5  # seconds
 DEVICES = {}
@@ -15,7 +15,6 @@ def monitor():
                 driver = driver_map[addr]()
                 driver.open()
                 DEVICES[addr] = driver
-
         time.sleep(DEVICE_CHECK_INTERVAL)
     pass
 
