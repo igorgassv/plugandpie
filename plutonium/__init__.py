@@ -17,4 +17,5 @@ def monitor():
     pass
 
 monitor_thread = threading.Thread(target=monitor)
+monitor_thread.daemon = True
 monitor_thread.start()
