@@ -1,8 +1,10 @@
-import sys
-import posix
-from fcntl import ioctl
-from plutonium.common.linux_i2c import *
 import ctypes
+import posix
+import sys
+from fcntl import ioctl
+
+from plutonium.common.linux_i2c import *
+from plutonium.interfaces.Interface import Interface
 
 # Try to make this support Python 2 as well.
 assert sys.version_info.major >= 3, __name__ + " is only supported on Python 3"
@@ -11,7 +13,7 @@ assert sys.version_info.major >= 3, __name__ + " is only supported on Python 3"
 DEFAULT_BUS = 1
 
 
-class I2CMaster(object):
+class I2CInterface(Interface):
     """Performs I2C I/O transactions on an I2C bus.
 
     Transactions are performed by passing one or more I2C I/O messages

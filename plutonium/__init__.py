@@ -1,7 +1,7 @@
 import threading
 import time
 from plutonium.common.utils import i2c_addresses
-from plutonium.drivers.mapping import driver_map
+from plutonium.devices.mapping import driver_map
 
 DEVICE_CHECK_INTERVAL = 5  # seconds
 DEVICES = {}

@@ -1,7 +1,7 @@
 # Converted from /usr/include/linux/i2c.h and /usr/include/linux/i2c-dev.h
 import ctypes
 
-#-----------------------------------------------------------------------
+# -----------------------------------------------------------------------
 # /usr/include/linux/i2c.h
 
 
@@ -22,8 +22,8 @@ class i2c_msg(ctypes.Structure):
         incremented by the number of block data bytes received.
     @buf: The buffer into which data is read, or from which it's written.
         An i2c_msg is the low level representation of one segment of an I2C
-        transaction.  It is visible to drivers in the @i2c_transfer()
-        procedure, to userspace from i2c-dev, and to I2C adapter drivers
+        transaction.  It is visible to devices in the @i2c_transfer()
+        procedure, to userspace from i2c-dev, and to I2C adapter devices
         through the @i2c_adapter.@master_xfer() method.
         Except when I2C "protocol mangling" is used, all I2C adapters
         implement the standard rules for I2C transactions.  Each transaction

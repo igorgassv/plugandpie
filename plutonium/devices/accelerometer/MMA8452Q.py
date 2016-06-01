@@ -1,7 +1,7 @@
 from plutonium.common.utils import twos_complement
-from plutonium.common.i2c import read, write
-from plutonium.drivers.accelerometer.Accelerometer import Accelerometer
-
+from plutonium.devices.accelerometer.Accelerometer import Accelerometer
+from plutonium.interfaces.I2CInterface import read, write
+from plutonium.interfaces import i2c
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
@@ -108,14 +108,12 @@ class MMA8452Q(Accelerometer):
     # this one is based off. I have made changes for consistency with other
     # Microstack modules.
 
-    def __init__(self,
-                 i2c_bus=DEFAULT_I2C_BUS,
-                 i2c_address=DEFAULT_I2C_ADDRESS):
-        super().__init__(i2c_bus)
+    def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS):
+        super().__init__(i2c[1])
         self.i2c_address = i2c_address
         self.xyz_data_cfg = MMA8452QRegister(XYZ_DATA_CFG,
                                              self.i2c_address,
-                                             self)
+                                             self.interface)
         self.ctrl_reg1 = MMA8452QRegister(CTRL_REG1, self.i2c_address, self)
         # have to store some registers locally since we can't read
         self._xyz_data_cfg_value = 0
