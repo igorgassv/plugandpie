@@ -12,7 +12,10 @@ def monitor():
         addresses = i2c_addresses()
         for addr in addresses:
             if addr not in DEVICES.keys():
-                DEVICES[addr] = driver_map[addr]()
+                driver = driver_map[addr]()
+                driver.open()
+                DEVICES[addr] = driver
+
         time.sleep(DEVICE_CHECK_INTERVAL)
     pass
 
