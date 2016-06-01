@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     # print data
     while True:
-        ms = accelerometer.get_xyz_ms2()
+        ms = accelerometer.get_ms2()
         print("----")
         print(datetime.datetime.now())
         print('m/s^2 | x: {:.2f}, y: {:.2f}, z: {:.2f}'.format(ms['x'],
