@@ -1,6 +1,6 @@
 from plutonium.common.utils import twos_complement
 from plutonium.common.i2c import read, write
-from plutonium.drivers.accelerometer import Accelerometer
+from plutonium.drivers.accelerometer.Accelerometer import Accelerometer
 
 
 DEFAULT_I2C_BUS = 1
