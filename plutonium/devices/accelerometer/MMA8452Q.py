@@ -114,7 +114,7 @@ class MMA8452Q(Accelerometer):
         self.xyz_data_cfg = MMA8452QRegister(XYZ_DATA_CFG,
                                              self.i2c_address,
                                              self.interface)
-        self.ctrl_reg1 = MMA8452QRegister(CTRL_REG1, self.i2c_address, self)
+        self.ctrl_reg1 = MMA8452QRegister(CTRL_REG1, self.i2c_address, self.interface)
         # have to store some registers locally since we can't read
         self._xyz_data_cfg_value = 0
         self._ctrl_reg1_value = 0
@@ -145,7 +145,7 @@ class MMA8452Q(Accelerometer):
         self._ctrl_reg1_value &= 0xff ^ CTRL_REG1_SET_ACTIVE
         self.ctrl_reg1.set(self._ctrl_reg1_value)
 
-    def get_xyz(self, raw=False, res12=True):
+    def get_g(self, raw=False, res12=True):
         """Returns the x, y and z values as a dictionary. By default it returns
         signed values at 12-bit resolution. You can specify a lower resolution
         (8-bit) or request the raw register values. Signed values are
@@ -184,7 +184,7 @@ class MMA8452Q(Accelerometer):
         #     +--------+--------+
 
         # bulk read works
-        buf = self.transaction(read(self.i2c_address, 7))[0]
+        buf = self.interface.transaction(read(self.i2c_address, 7))[0]
         # status = buf[0]
         if res12:
             x = (buf[1] << 4) | (buf[2] >> 4)
@@ -208,9 +208,9 @@ class MMA8452Q(Accelerometer):
 
         return {'x': x, 'y': y, 'z': z}
 
-    def get_xyz_ms2(self):
+    def get_ms2(self):
         """Returns the x, y, z values as a dictionary in SI units (m/s^2)."""
-        xyz = self.get_xyz(raw=False, res12=True)
+        xyz = self.get_g(raw=False, res12=True)
         # multiply each xyz value by the standard gravity value
         return {direction: magnitude * STANDARD_GRAVITY
                 for direction, magnitude in xyz.items()}
