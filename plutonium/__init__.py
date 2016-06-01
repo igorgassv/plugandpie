@@ -7,14 +7,15 @@ DEVICES = {}
 
 
 def monitor():
-    addresses = i2c_addresses()
-    for addr in addresses:
-        if addr not in DEVICES.keys():
-            DEVICES[addr] = None
-            print("Device added")
-        else:
-            print("Device is known")
-    time.sleep(DEVICE_CHECK_INTERVAL)
+    while True:
+        addresses = i2c_addresses()
+        for addr in addresses:
+            if addr not in DEVICES.keys():
+                DEVICES[addr] = None
+                print("Device added")
+            else:
+                print("Device is known")
+        time.sleep(DEVICE_CHECK_INTERVAL)
     pass
 
 monitor_thread = threading.Thread(target=monitor)
