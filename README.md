@@ -1,5 +1,14 @@
 # Plutonium
 
+### Installation
+Requires `python-smbus` for Python 3
+
+Workaround for repeated starts on Raspberry Pi i2c driver:
+```
+sudo su -
+echo -n 1 > /sys/module/i2c_bcm2708/parameters/combined
+exit
+```
 
 ### Goal
 ```

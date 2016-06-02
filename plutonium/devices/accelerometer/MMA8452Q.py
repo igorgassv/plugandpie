@@ -1,7 +1,7 @@
 from plutonium.common.utils import twos_complement
 from plutonium.devices.accelerometer.Accelerometer import Accelerometer
 from plutonium.interfaces.I2CInterface import read, write
-from plutonium.interfaces import i2c
+from smbus import SMBus
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
@@ -109,12 +109,12 @@ class MMA8452Q(Accelerometer):
     # Microstack modules.
 
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS):
-        super().__init__(i2c[1])
+        super().__init__(SMBus(1))
         self.i2c_address = i2c_address
-        self.xyz_data_cfg = MMA8452QRegister(XYZ_DATA_CFG,
-                                             self.i2c_address,
-                                             self.interface)
-        self.ctrl_reg1 = MMA8452QRegister(CTRL_REG1, self.i2c_address, self.interface)
+        self.xyz_data_cfg = SMBusRegister(XYZ_DATA_CFG,
+                                          self.i2c_address,
+                                          self.interface)
+        self.ctrl_reg1 = SMBusRegister(CTRL_REG1, self.i2c_address, self.interface)
         # have to store some registers locally since we can't read
         self._xyz_data_cfg_value = 0
         self._ctrl_reg1_value = 0
@@ -254,19 +254,3 @@ class MMA8452Q(Accelerometer):
             self._ctrl_reg1_value &= 0b11100111
             self._ctrl_reg1_value |= output_data_rates[output_data_rate]
             self.ctrl_reg1.set(self._ctrl_reg1_value)
-
-
-class MMA8452QRegister(object):
-    """An 8 bit register inside an MMA8452Q. Since the native I2C driver
-    does not support multiple starts (SMBus) we cannot implement register
-    reads.
-    """
-
-    def __init__(self, register_address, device_address, i2c_master):
-        self.register_address = register_address
-        self.device_address = device_address
-        self.i2c_master = i2c_master
-
-    def set(self, v):
-        self.i2c_master.transaction(
-            write(self.device_address, [self.register_address, v]))

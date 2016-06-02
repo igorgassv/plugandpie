@@ -1,6 +1,27 @@
 # Converted from /usr/include/linux/i2c.h and /usr/include/linux/i2c-dev.h
 import ctypes
 
+
+def read(address, n_bytes):
+    """An I2C I/O message that reads n_bytes bytes of data"""
+    buffer = ctypes.create_string_buffer(n_bytes)
+    return i2c_msg(address, I2C_M_RD, ctypes.sizeof(buffer), buffer)
+
+
+def write(address, data):
+    """An I2C I/O message that writes one or more bytes of data.
+
+    The bytes are passed to this function as a sequence.
+    """
+    byte_sequence = bytes(data)
+    buffer = ctypes.create_string_buffer(byte_sequence, len(byte_sequence))
+    return i2c_msg(address, 0, ctypes.sizeof(buffer), buffer)
+
+
+def i2c_msg_to_bytes(m):
+    return ctypes.string_at(m.buf, m.len)
+
+
 # -----------------------------------------------------------------------
 # /usr/include/linux/i2c.h
 

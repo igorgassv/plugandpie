@@ -1,14 +1,8 @@
-import ctypes
 import posix
-import sys
 from fcntl import ioctl
 
 from plutonium.common.linux_i2c import *
 from plutonium.interfaces.Interface import Interface
-
-# Try to make this support Python 2 as well.
-assert sys.version_info.major >= 3, __name__ + " is only supported on Python 3"
-
 
 DEFAULT_BUS = 1
 
@@ -83,30 +77,3 @@ class I2CInterface(Interface):
         ioctl(self.fd, I2C_RDWR, ioctl_arg)
 
         return [i2c_msg_to_bytes(m) for m in msgs if (m.flags & I2C_M_RD)]
-
-
-def read(address, n_bytes):
-    """An I2C I/O message that reads n_bytes bytes of data"""
-    return reading_into(address, ctypes.create_string_buffer(n_bytes))
-
-
-def reading_into(address, buf):
-    """An I2C I/O message that reads into an existing ctypes string buffer."""
-    return _new_i2c_msg(address, I2C_M_RD, buf)
-
-
-def write(address, byte_sequence):
-    """An I2C I/O message that writes one or more bytes of data.
-
-    The bytes are passed to this function as a sequence.
-    """
-    buf = bytes(byte_sequence)
-    return _new_i2c_msg(address, 0, ctypes.create_string_buffer(buf, len(buf)))
-
-
-def _new_i2c_msg(address, flags, buf):
-    return i2c_msg(addr=address, flags=flags, len=ctypes.sizeof(buf), buf=buf)
-
-
-def i2c_msg_to_bytes(m):
-    return ctypes.string_at(m.buf, m.len)

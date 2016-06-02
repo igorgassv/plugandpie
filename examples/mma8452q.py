@@ -1,13 +1,13 @@
 """Prints the accelerometer values every second."""
 import time
 import datetime
-from plutonium.devices.accelerometer.MMA8452Q import MMA8452Q
+import plutonium as pu
 
 G_RANGE = 2
 INTERVAL = 0.5  # seconds
 
 if __name__ == '__main__':
-    accelerometer = MMA8452Q()
+    accelerometer = pu.DEVICES['1d']
 
     # Configure (This is completely optional -- shown here as an example)
     accelerometer.standby()
