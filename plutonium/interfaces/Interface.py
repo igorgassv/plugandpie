@@ -1,11 +1,14 @@
 
 
 class Interface:
-    def open(self):
+    def write_byte(self, device_address, register_address, byte):
         raise NotImplementedError()
 
-    def close(self):
+    def write_bytes(self, device_address, register_address, byte_sequence):
         raise NotImplementedError()
 
-    def transaction(self):
+    def read_byte(self, device_address, register_address):
+        raise NotImplementedError()
+
+    def read_bytes(self, device_address, register_address, number_of_bytes):
         raise NotImplementedError()

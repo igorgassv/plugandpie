@@ -1,54 +1,10 @@
 from plutonium.common.utils import twos_complement
 from plutonium.devices.accelerometer.Accelerometer import Accelerometer
-from plutonium.interfaces.I2CInterface import read, write
-from smbus import SMBus
+from plutonium.interfaces.SMBus import SMBusRegister
+from plutonium.interfaces import smbus
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
-# DEFAULT_I2C_ADDRESS = 0x1c
-
-# register addresses
-STATUS = 0x00
-OUT_X_MSB = 0x01
-OUT_X_LSB = 0x02
-OUT_Y_MSB = 0x03
-OUT_Y_LSB = 0x04
-OUT_Z_MSB = 0x05
-OUT_Z_LSB = 0x06
-SYSMOD = 0x0B
-INT_SOURCE = 0x0C
-WHO_AM_I = 0x0D
-XYZ_DATA_CFG = 0x0E
-HP_FILTER_CUTOFF = 0x0F
-PL_STATUS = 0x10
-PL_CFG = 0x11
-PL_COUNT = 0x12
-PL_BF_ZCOMP = 0x13
-P_L_THS_REG = 0x14
-FF_MT_CFG = 0x15
-FF_MT_SRC1 = 0x16
-FF_MT_SRC2 = 0x17
-FF_MT_COUNT = 0x18
-TRANSIENT_CFG = 0x1D
-TRANSIENT_THS = 0x1F
-TRANSIENT_COUNT = 0x20
-PULSE_CFG = 0x21
-PULSE_SRC = 0x22
-PULSE_THSX = 0x23
-PULSE_THSY = 0x24
-PULSE_THSZ = 0x25
-PULSE_TMLT = 0x26
-PULSE_LTCY = 0x27
-PULSE_WIND = 0x28
-ASLP_COUNT = 0x29
-CTRL_REG1 = 0x2A
-CTRL_REG2 = 0x2B
-CTRL_REG3 = 0x2C
-CTRL_REG4 = 0x2D
-CTRL_REG5 = 0x2E
-OFF_X = 0x2F
-OFF_Y = 0x30
-OFF_Z = 0x31
 
 # register values
 # CTRL_REG1 Register (Read/Write)
@@ -83,41 +39,54 @@ STANDARD_GRAVITY = 9.80665
 
 
 class MMA8452Q(Accelerometer):
-    """Freescale MMA8452Q accelerometer2.
-
-    http://www.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf
-
-    """
-    # This chip uses an SMBus implementation which is not well supported on
-    # the Raspberry Pi (at least, not in Python 3). We can write to registers
-    # but reading requires sending multiple START signals. This somehow resets
-    # the requested register address to 0x00. So we *can* read, but only from
-    # register 0x00 and subsequent registers (using a multiple read). Luckily
-    # the XYZ registers are in the first few and we can access them using a
-    # multi-read.
-
-    # One might be inclined to multi-read the whole register bank however the
-    # auto increment resets to 0x00 shortly after the XYZ registers.
-
-    # Maybe we can get it working though. Try getting python-smbus working
-    # with Python 3
-    # http://www.spinics.net/lists/linux-i2c/msg08427.html
-    # http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/plain/Documentation/i2c/smbus-protocol
-
-    # Special thanks for John Nivard for providing a working class, which
-    # this one is based off. I have made changes for consistency with other
-    # Microstack modules.
+    STATUS = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x00)
+    OUT_X_MSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x01)
+    OUT_X_LSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x02)
+    OUT_Y_MSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x03)
+    OUT_Y_LSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x04)
+    OUT_Z_MSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x05)
+    OUT_Z_LSB = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x06)
+    SYSMOD = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0B)
+    INT_SOURCE = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0C)
+    WHO_AM_I = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0D)
+    XYZ_DATA_CFG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0E)
+    HP_FILTER_CUTOFF = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0F)
+    PL_STATUS = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x10)
+    PL_CFG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x11)
+    PL_COUNT = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x12)
+    PL_BF_ZCOMP = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x13)
+    P_L_THS_REG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x14)
+    FF_MT_CFG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x15)
+    FF_MT_SRC1 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x16)
+    FF_MT_SRC2 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x17)
+    FF_MT_COUNT = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x18)
+    TRANSIENT_CFG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x1D)
+    TRANSIENT_THS = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x1F)
+    TRANSIENT_COUNT = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x20)
+    PULSE_CFG = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x21)
+    PULSE_SRC = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x22)
+    PULSE_THSX = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x23)
+    PULSE_THSY = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x24)
+    PULSE_THSZ = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x25)
+    PULSE_TMLT = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x26)
+    PULSE_LTCY = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x27)
+    PULSE_WIND = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x28)
+    ASLP_COUNT = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x29)
+    CTRL_REG1 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2A)
+    CTRL_REG2 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2B)
+    CTRL_REG3 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2C)
+    CTRL_REG4 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2D)
+    CTRL_REG5 = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2E)
+    OFF_X = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2F)
+    OFF_Y = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x30)
+    OFF_Z = SMBusRegister(smbus[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x31)
 
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS):
-        super().__init__(SMBus(1))
+        super().__init__(smbus[i2c_bus])
         self.i2c_address = i2c_address
-        self.xyz_data_cfg = SMBusRegister(XYZ_DATA_CFG,
-                                          self.i2c_address,
-                                          self.interface)
-        self.ctrl_reg1 = SMBusRegister(CTRL_REG1, self.i2c_address, self.interface)
-        # have to store some registers locally since we can't read
-        self._xyz_data_cfg_value = 0
-        self._ctrl_reg1_value = 0
+        # cache control registers
+        self._XYZ_DATA_CFG_VALUE = 0
+        self._CTRL_REG1_VALUE = 0
 
     def init(self):
         """Initialises the accelerometer2 with some default values."""
@@ -128,92 +97,22 @@ class MMA8452Q(Accelerometer):
 
     def reset(self):
         """Resets the accelerometer2."""
-        self._ctrl_reg1_value = 0
-        self.ctrl_reg1.set(self._ctrl_reg1_value)
+        self._CTRL_REG1_VALUE = 0
+        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
 
     def activate(self):
         """Start recording the accelerometer2 values. Call this after
         changing any settings.
         """
-        self._ctrl_reg1_value |= CTRL_REG1_SET_ACTIVE
-        self.ctrl_reg1.set(self._ctrl_reg1_value)
+        self._CTRL_REG1_VALUE |= CTRL_REG1_SET_ACTIVE
+        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
 
     def standby(self):
         """Stop recording the accelerometer2 values. Call this before
         changing any settings.
         """
-        self._ctrl_reg1_value &= 0xff ^ CTRL_REG1_SET_ACTIVE
-        self.ctrl_reg1.set(self._ctrl_reg1_value)
-
-    def get_g(self, raw=False, res12=True):
-        """Returns the x, y and z values as a dictionary. By default it returns
-        signed values at 12-bit resolution. You can specify a lower resolution
-        (8-bit) or request the raw register values. Signed values are
-        in G's. You can alter the recording range with `set_g_range()`.
-
-        :param raw: If True: return raw, unsigned data, else: sign values
-        :type raw: boolean (default: False)
-        :param res12: If True: read 12-bit resolution, else: 8-bit
-        :type res12: boolean (default: True)
-        """
-        # Since we can't read arbitrary registers from this chip over I2C
-        # (because there is no decent SMBus implementation, in Python 3 at
-        # least) we have to just read the first 7 registers and pull the
-        # XYZ data from that.
-
-        # Notes:
-
-        # - 12-bit resolution from OUT MSB and OUT LSB registers:
-
-        #     +--------+-----------------+
-        #     | msb    | lsb             |
-        #     +--------+--------+--------+
-        #     | 8 bits | 4 bits | 4 bits |
-        #     +--------+--------+--------+
-        #     | value (12 bits) | unused |
-        #     +--------+--------+--------+
-
-        # - 8-bit resolution just from OUT MSB:
-
-        #     +--------+--------+
-        #     | msb    | lsb    |
-        #     +--------+--------+
-        #     | 8 bits | 8 bits |
-        #     +--------+--------+
-        #     | value  | unused |
-        #     +--------+--------+
-
-        # bulk read works
-        buf = self.interface.transaction(read(self.i2c_address, 7))[0]
-        # status = buf[0]
-        if res12:
-            x = (buf[1] << 4) | (buf[2] >> 4)
-            y = (buf[3] << 4) | (buf[4] >> 4)
-            z = (buf[5] << 4) | (buf[6] >> 4)
-        else:
-            x, y, z = buf[1], buf[3], buf[5]
-
-        if not raw:
-            # get range
-            fsr = self._xyz_data_cfg_value & 0x03
-            g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
-                        XYZ_DATA_CFG_FSR_4G: 4,
-                        XYZ_DATA_CFG_FSR_8G: 8}
-            g_range = g_ranges[fsr]
-            resolution = 12 if res12 else 8
-            gmul = g_range / (2 ** (resolution - 1))
-            x = twos_complement(x, resolution) * gmul
-            y = twos_complement(y, resolution) * gmul
-            z = twos_complement(z, resolution) * gmul
-
-        return {'x': x, 'y': y, 'z': z}
-
-    def get_ms2(self):
-        """Returns the x, y, z values as a dictionary in SI units (m/s^2)."""
-        xyz = self.get_g(raw=False, res12=True)
-        # multiply each xyz value by the standard gravity value
-        return {direction: magnitude * STANDARD_GRAVITY
-                for direction, magnitude in xyz.items()}
+        self._CTRL_REG1_VALUE &= 0xff ^ CTRL_REG1_SET_ACTIVE
+        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
 
     def set_g_range(self, g_range):
         """Sets the force range (in Gs -- where 1G is the force of gravity).
@@ -228,9 +127,9 @@ class MMA8452Q(Accelerometer):
                     4: XYZ_DATA_CFG_FSR_4G,
                     8: XYZ_DATA_CFG_FSR_8G}
         if g_range in g_ranges:
-            self._xyz_data_cfg_value &= 0b11111100
-            self._xyz_data_cfg_value |= g_ranges[g_range]
-            self.xyz_data_cfg.set(self._xyz_data_cfg_value)
+            self._XYZ_DATA_CFG_VALUE &= 0b11111100
+            self._XYZ_DATA_CFG_VALUE |= g_ranges[g_range]
+            self.XYZ_DATA_CFG.set(self._XYZ_DATA_CFG_VALUE)
 
     def set_output_data_rate(self, output_data_rate):
         """Sets the output data rate in Hz.
@@ -251,6 +150,48 @@ class MMA8452Q(Accelerometer):
                              6.25: CTRL_REG1_ODR_6_25,
                              1.56: CTRL_REG1_ODR_1_56}
         if output_data_rate in output_data_rates:
-            self._ctrl_reg1_value &= 0b11100111
-            self._ctrl_reg1_value |= output_data_rates[output_data_rate]
-            self.ctrl_reg1.set(self._ctrl_reg1_value)
+            self._CTRL_REG1_VALUE &= 0b11100111
+            self._CTRL_REG1_VALUE |= output_data_rates[output_data_rate]
+            self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
+
+    def get_g(self, raw=False, res12=True):
+        """Returns the x, y and z values as a dictionary. By default it returns
+        signed values at 12-bit resolution. You can specify a lower resolution
+        (8-bit) or request the raw register values. Signed values are
+        in G's. You can alter the recording range with `set_g_range()`.
+
+        :param raw: If True: return raw, unsigned data, else: sign values
+        :type raw: boolean (default: False)
+        :param res12: If True: read 12-bit resolution, else: 8-bit
+        :type res12: boolean (default: True)
+        """
+        buf = self.interface.read_bytes(self.i2c_address, 0x00, 7)
+        # status = buf[0]
+        if res12:
+            x = (buf[1] << 4) | (buf[2] >> 4)
+            y = (buf[3] << 4) | (buf[4] >> 4)
+            z = (buf[5] << 4) | (buf[6] >> 4)
+        else:
+            x, y, z = buf[1], buf[3], buf[5]
+
+        if not raw:
+            # get range
+            fsr = self._XYZ_DATA_CFG_VALUE & 0x03
+            g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
+                        XYZ_DATA_CFG_FSR_4G: 4,
+                        XYZ_DATA_CFG_FSR_8G: 8}
+            g_range = g_ranges[fsr]
+            resolution = 12 if res12 else 8
+            gmul = g_range / (2 ** (resolution - 1))
+            x = twos_complement(x, resolution) * gmul
+            y = twos_complement(y, resolution) * gmul
+            z = twos_complement(z, resolution) * gmul
+
+        return {'x': x, 'y': y, 'z': z}
+
+    def get_ms2(self):
+        """Returns the x, y, z values as a dictionary in SI units (m/s^2)."""
+        xyz = self.get_g(raw=False, res12=True)
+        # multiply each xyz value by the standard gravity value
+        return {direction: magnitude * STANDARD_GRAVITY
+                for direction, magnitude in xyz.items()}
