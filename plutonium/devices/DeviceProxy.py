@@ -6,7 +6,8 @@ class DeviceProxy:
         self._device = device
 
     def __getattribute__(self, name):
-        if self._device is not None:
+        _device = object.__getattribute__(self, '_device')
+        if _device is not None:
             return getattr(self._device, name)
         else:
             print("Device not found")
