@@ -12,8 +12,7 @@ class DeviceProxy:
         pass
 
     def __getattribute__(self, name):
-        _device = object.__getattribute__(self, '_device')
-        if _device is not None:
+        try:
+            return object.__getattribute__(self, name)
+        except AttributeError:
             return getattr(self._device, name)
-        else:
-            raise AttributeError()
