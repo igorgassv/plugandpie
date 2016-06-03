@@ -7,13 +7,6 @@ G_RANGE = 2
 INTERVAL = 0.5  # seconds
 
 if __name__ == '__main__':
-    # Configure (This is completely optional -- shown here as an example)
-    accelerometer.standby()
-    accelerometer.set_g_range(G_RANGE)
-    accelerometer.activate()
-    print("g = {}".format(G_RANGE))
-    time.sleep(INTERVAL)  # settle
-    # print data
     while True:
         ms = accelerometer.get_ms2()
         print("----")
