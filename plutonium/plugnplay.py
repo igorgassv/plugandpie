@@ -32,7 +32,7 @@ class Proxy:
                 else:
                     time.sleep(Proxy.TRY_INTERVAL)
                     plug(self, self._target)
-                    getattr(self, name)
+                    return getattr(self, name)
 
 
 accelerometer = Proxy('accelerometer')
