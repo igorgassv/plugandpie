@@ -19,9 +19,9 @@ class Proxy:
         (It might take some time to configure the device drivers after startup)
         After a number of tries, give up with AttributeError
         """
-        if hasattr(self, name):
+        try:
             return object.__getattribute__(self, name)
-        else:
+        except AttributeError:
             if self._obj is not None:
                 return getattr(self._obj, name)
             else:
