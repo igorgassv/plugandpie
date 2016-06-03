@@ -1,7 +1,7 @@
 import posix
 from fcntl import ioctl
 
-from plutonium.common.linux_i2c import *
+from plutonium.common.i2c import *
 from plutonium.interfaces.Interface import Interface
 
 DEFAULT_BUS = 1
