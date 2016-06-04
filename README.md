@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) Plug N Pie [![Build Status](https://travis-ci.org/villasv/plugandpie.svg?branch=master)](https://travis-ci.org/villasv/plugandpie) [![Gitter](https://badges.gitter.im/villasv/plugandpie.svg)](https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) Plug N Pie [![Build Status][bs]][ci] [![Code Quality][cq]][ci] [![Code Coverage][cc]][ci] [![Chat][chat-image]][chat-link]
 
 ### Installation
 Requires `python-smbus` for Python 3
@@ -19,3 +19,10 @@ exit
 >>> accelerometer.get_xyz()
 {'x': 0.12, 'y': 1.14, 'z': 9.23}
 ```
+
+[ci]: https://scrutinizer-ci.com/g/villasv/plugandpie/?branch=master
+[bs]: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/build.png?b=master
+[cq]: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/quality-score.png?b=master
+[cc]: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/coverage.png?b=master
+[chat-image]: https://badges.gitter.im/villasv/plugandpie.svg
+[chat-link]: https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
