@@ -1,4 +1,4 @@
-# Plutonium
+# Plug N Pie ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) [![Build Status](https://travis-ci.org/villasv/plugandpie.svg?branch=master)](https://travis-ci.org/villasv/plugandpie) 
 
 ### Installation
 Requires `python-smbus` for Python 3

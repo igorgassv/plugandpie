@@ -2,13 +2,13 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.0.0'
+VERSION = '0.0.1'
 PY3 = sys.version_info[0] >= 3
 
 setup(
-    name='plutonium',
+    name='plugandpie',
     version=VERSION,
-    description='Device driver library of sensors',
+    description='Device driver and automation for common sensors',
     author='Victor Villas',
     author_email='villasv@outlook.com',
     license='GPLv3+',
@@ -24,5 +24,5 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords='plutonium raspberrypi sensor',
+    keywords='plugandpie plug and play raspberrypi sensor',
 )
