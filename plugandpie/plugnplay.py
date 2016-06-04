@@ -1,6 +1,6 @@
 import time
-from plutonium.common.utils import *
-from plutonium.devices.mapping import driver_map
+from plugandpie.common.utils import *
+from plugandpie.devices.mapping import driver_map
 
 
 class Proxy:

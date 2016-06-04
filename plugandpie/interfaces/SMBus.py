@@ -1,4 +1,4 @@
-from plutonium.interfaces.Interface import Interface
+from plugandpie.interfaces.Interface import Interface
 
 import smbus
 

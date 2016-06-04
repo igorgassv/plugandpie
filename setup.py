@@ -2,7 +2,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.0.1'
+VERSION = '0.0.0'
 PY3 = sys.version_info[0] >= 3
 
 setup(

@@ -1,7 +1,7 @@
-from plutonium.common.utils import twos_complement
-from plutonium.devices.accelerometer.Accelerometer import Accelerometer
-from plutonium.interfaces.SMBus import SMBusRegister
-from plutonium.interfaces import interfaces
+from plugandpie.common.utils import twos_complement
+from plugandpie.devices.accelerometer.Accelerometer import Accelerometer
+from plugandpie.interfaces.SMBus import SMBusRegister
+from plugandpie.interfaces import interfaces
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d

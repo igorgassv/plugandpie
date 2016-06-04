@@ -1,4 +1,4 @@
-from plutonium.devices.Device import Device
+from plugandpie.devices.Device import Device
 
 
 class Accelerometer(Device):

@@ -1,8 +1,8 @@
 import posix
 from fcntl import ioctl
 
-from plutonium.common.i2c import *
-from plutonium.interfaces.Interface import Interface
+from plugandpie.common.i2c import *
+from plugandpie.interfaces.Interface import Interface
 
 DEFAULT_BUS = 1
 
