@@ -1,4 +1,4 @@
-# Plug N Pie ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) [![Build Status](https://travis-ci.org/villasv/plugandpie.svg?branch=master)](https://travis-ci.org/villasv/plugandpie) 
+# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) Plug N Pie [![Build Status](https://travis-ci.org/villasv/plugandpie.svg?branch=master)](https://travis-ci.org/villasv/plugandpie) [![Gitter](https://badges.gitter.im/villasv/plugandpie.svg)](https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Installation
 Requires `python-smbus` for Python 3
