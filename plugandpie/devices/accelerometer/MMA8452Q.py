@@ -6,7 +6,6 @@ from plugandpie.interfaces import interfaces
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
 
-# register values
 # CTRL_REG1 Register (Read/Write)
 # +------------+------------+-------+-------+------+--------+--------+--------+
 # | bit 7      | bit 6      | bit 5 | bit 4 | bit 3| bit 2  | bit 1  | bit 0  |
@@ -35,112 +34,76 @@ XYZ_DATA_CFG_FSR_4G = 0x01
 XYZ_DATA_CFG_FSR_8G = 0x02
 
 
-STANDARD_GRAVITY = 9.80665
-
-
 class MMA8452Q(Accelerometer):
-    STATUS = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x00)
-    OUT_X_MSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x01)
-    OUT_X_LSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x02)
-    OUT_Y_MSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x03)
-    OUT_Y_LSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x04)
-    OUT_Z_MSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x05)
-    OUT_Z_LSB = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x06)
-    SYSMOD = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0B)
-    INT_SOURCE = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0C)
-    WHO_AM_I = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0D)
-    XYZ_DATA_CFG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0E)
-    HP_FILTER_CUTOFF = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x0F)
-    PL_STATUS = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x10)
-    PL_CFG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x11)
-    PL_COUNT = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x12)
-    PL_BF_ZCOMP = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x13)
-    P_L_THS_REG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x14)
-    FF_MT_CFG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x15)
-    FF_MT_SRC1 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x16)
-    FF_MT_SRC2 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x17)
-    FF_MT_COUNT = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x18)
-    TRANSIENT_CFG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x1D)
-    TRANSIENT_THS = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x1F)
-    TRANSIENT_COUNT = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x20)
-    PULSE_CFG = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x21)
-    PULSE_SRC = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x22)
-    PULSE_THSX = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x23)
-    PULSE_THSY = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x24)
-    PULSE_THSZ = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x25)
-    PULSE_TMLT = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x26)
-    PULSE_LTCY = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x27)
-    PULSE_WIND = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x28)
-    ASLP_COUNT = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x29)
-    CTRL_REG1 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2A)
-    CTRL_REG2 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2B)
-    CTRL_REG3 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2C)
-    CTRL_REG4 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2D)
-    CTRL_REG5 = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2E)
-    OFF_X = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x2F)
-    OFF_Y = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x30)
-    OFF_Z = SMBusRegister(interfaces[DEFAULT_I2C_BUS], DEFAULT_I2C_ADDRESS, 0x31)
-
-    def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS):
+    def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
         super().__init__(interfaces[i2c_bus])
         self.i2c_address = i2c_address
-        # cache control registers
-        self._XYZ_DATA_CFG_VALUE = 0
-        self._CTRL_REG1_VALUE = 0
+        self.gravity = gravity
+        # registers
+        self.STATUS = SMBusRegister(self.interface, i2c_address, 0x00)
+        self.OUT_X_MSB = SMBusRegister(self.interface, i2c_address, 0x01)
+        self.OUT_X_LSB = SMBusRegister(self.interface, i2c_address, 0x02)
+        self.OUT_Y_MSB = SMBusRegister(self.interface, i2c_address, 0x03)
+        self.OUT_Y_LSB = SMBusRegister(self.interface, i2c_address, 0x04)
+        self.OUT_Z_MSB = SMBusRegister(self.interface, i2c_address, 0x05)
+        self.OUT_Z_LSB = SMBusRegister(self.interface, i2c_address, 0x06)
+        self.SYSMOD = SMBusRegister(self.interface, i2c_address, 0x0B)
+        self.INT_SOURCE = SMBusRegister(self.interface, i2c_address, 0x0C)
+        self.WHO_AM_I = SMBusRegister(self.interface, i2c_address, 0x0D)
+        self.XYZ_DATA_CFG = SMBusRegister(self.interface, i2c_address, 0x0E)
+        self.HP_FILTER_CUTOFF = SMBusRegister(self.interface, i2c_address, 0x0F)
+        self.PL_STATUS = SMBusRegister(self.interface, i2c_address, 0x10)
+        self.PL_CFG = SMBusRegister(self.interface, i2c_address, 0x11)
+        self.PL_COUNT = SMBusRegister(self.interface, i2c_address, 0x12)
+        self.PL_BF_ZCOMP = SMBusRegister(self.interface, i2c_address, 0x13)
+        self.P_L_THS_REG = SMBusRegister(self.interface, i2c_address, 0x14)
+        self.FF_MT_CFG = SMBusRegister(self.interface, i2c_address, 0x15)
+        self.FF_MT_SRC1 = SMBusRegister(self.interface, i2c_address, 0x16)
+        self.FF_MT_SRC2 = SMBusRegister(self.interface, i2c_address, 0x17)
+        self.FF_MT_COUNT = SMBusRegister(self.interface, i2c_address, 0x18)
+        self.TRANSIENT_CFG = SMBusRegister(self.interface, i2c_address, 0x1D)
+        self.TRANSIENT_THS = SMBusRegister(self.interface, i2c_address, 0x1F)
+        self.TRANSIENT_COUNT = SMBusRegister(self.interface, i2c_address, 0x20)
+        self.PULSE_CFG = SMBusRegister(self.interface, i2c_address, 0x21)
+        self.PULSE_SRC = SMBusRegister(self.interface, i2c_address, 0x22)
+        self.PULSE_THSX = SMBusRegister(self.interface, i2c_address, 0x23)
+        self.PULSE_THSY = SMBusRegister(self.interface, i2c_address, 0x24)
+        self.PULSE_THSZ = SMBusRegister(self.interface, i2c_address, 0x25)
+        self.PULSE_TMLT = SMBusRegister(self.interface, i2c_address, 0x26)
+        self.PULSE_LTCY = SMBusRegister(self.interface, i2c_address, 0x27)
+        self.PULSE_WIND = SMBusRegister(self.interface, i2c_address, 0x28)
+        self.ASLP_COUNT = SMBusRegister(self.interface, i2c_address, 0x29)
+        self.CTRL_REG1 = SMBusRegister(self.interface, i2c_address, 0x2A)
+        self.CTRL_REG2 = SMBusRegister(self.interface, i2c_address, 0x2B)
+        self.CTRL_REG3 = SMBusRegister(self.interface, i2c_address, 0x2C)
+        self.CTRL_REG4 = SMBusRegister(self.interface, i2c_address, 0x2D)
+        self.CTRL_REG5 = SMBusRegister(self.interface, i2c_address, 0x2E)
+        self.OFF_X = SMBusRegister(self.interface, i2c_address, 0x2F)
+        self.OFF_Y = SMBusRegister(self.interface, i2c_address, 0x30)
+        self.OFF_Z = SMBusRegister(self.interface, i2c_address, 0x31)
 
     def init(self):
-        """Initialises the accelerometer2 with some default values."""
         self.standby()
         self.set_output_data_rate(800)  # Hz
         self.set_g_range(2)
         self.activate()
 
     def reset(self):
-        """Resets the accelerometer2."""
-        self._CTRL_REG1_VALUE = 0
-        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
+        self.CTRL_REG1.set(0)
 
     def activate(self):
-        """Start recording the accelerometer2 values. Call this after
-        changing any settings.
-        """
-        self._CTRL_REG1_VALUE |= CTRL_REG1_SET_ACTIVE
-        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
+        self.CTRL_REG1.set(self.CTRL_REG1.cached_value | CTRL_REG1_SET_ACTIVE)
 
     def standby(self):
-        """Stop recording the accelerometer2 values. Call this before
-        changing any settings.
-        """
-        self._CTRL_REG1_VALUE &= 0xff ^ CTRL_REG1_SET_ACTIVE
-        self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
+        self.CTRL_REG1.set(self.CTRL_REG1.cached_value & ~CTRL_REG1_SET_ACTIVE)
 
     def set_g_range(self, g_range):
-        """Sets the force range (in Gs -- where 1G is the force of gravity).
-
-        Be sure to call `standby()` before using this method and `activate()`
-        after using this method.
-
-        :param g_range: The force range in Gs.
-        :type g_range: int (acceptable ranges: 2, 4 or 8)
-        """
         g_ranges = {2: XYZ_DATA_CFG_FSR_2G,
                     4: XYZ_DATA_CFG_FSR_4G,
                     8: XYZ_DATA_CFG_FSR_8G}
-        if g_range in g_ranges:
-            self._XYZ_DATA_CFG_VALUE &= 0b11111100
-            self._XYZ_DATA_CFG_VALUE |= g_ranges[g_range]
-            self.XYZ_DATA_CFG.set(self._XYZ_DATA_CFG_VALUE)
+        self.XYZ_DATA_CFG.set(self.XYZ_DATA_CFG.cached_value & 0b11111100 | g_ranges[g_range])
 
     def set_output_data_rate(self, output_data_rate):
-        """Sets the output data rate in Hz.
-
-        Be sure to call `standby()` before using this method and `activate()`
-        after using this method.
-
-        :param output_data_rate: The output data rate.
-        :type output_data_rate: int (acceptable rates: 800, 400, 200, 100,
-                                50, 12.5, 6.25, 1.56)
-        """
         output_data_rates = {800: CTRL_REG1_ODR_800,
                              400: CTRL_REG1_ODR_400,
                              200: CTRL_REG1_ODR_200,
@@ -149,22 +112,9 @@ class MMA8452Q(Accelerometer):
                              12.5: CTRL_REG1_ODR_12_5,
                              6.25: CTRL_REG1_ODR_6_25,
                              1.56: CTRL_REG1_ODR_1_56}
-        if output_data_rate in output_data_rates:
-            self._CTRL_REG1_VALUE &= 0b11100111
-            self._CTRL_REG1_VALUE |= output_data_rates[output_data_rate]
-            self.CTRL_REG1.set(self._CTRL_REG1_VALUE)
+        self.CTRL_REG1.set(self.CTRL_REG1.cached_value & 0b11100111 | output_data_rates[output_data_rate])
 
     def get_g(self, raw=False, res12=True):
-        """Returns the x, y and z values as a dictionary. By default it returns
-        signed values at 12-bit resolution. You can specify a lower resolution
-        (8-bit) or request the raw register values. Signed values are
-        in G's. You can alter the recording range with `set_g_range()`.
-
-        :param raw: If True: return raw, unsigned data, else: sign values
-        :type raw: boolean (default: False)
-        :param res12: If True: read 12-bit resolution, else: 8-bit
-        :type res12: boolean (default: True)
-        """
         buf = self.interface.read_bytes(self.i2c_address, 0x00, 7)
         # status = buf[0]
         if res12:
@@ -176,7 +126,7 @@ class MMA8452Q(Accelerometer):
 
         if not raw:
             # get range
-            fsr = self._XYZ_DATA_CFG_VALUE & 0x03
+            fsr = self.XYZ_DATA_CFG.cached_value & 0x03
             g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
                         XYZ_DATA_CFG_FSR_4G: 4,
                         XYZ_DATA_CFG_FSR_8G: 8}
@@ -193,5 +143,5 @@ class MMA8452Q(Accelerometer):
         """Returns the x, y, z values as a dictionary in SI units (m/s^2)."""
         xyz = self.get_g(raw=False, res12=True)
         # multiply each xyz value by the standard gravity value
-        return {direction: magnitude * STANDARD_GRAVITY
+        return {direction: magnitude * self.gravity
                 for direction, magnitude in xyz.items()}

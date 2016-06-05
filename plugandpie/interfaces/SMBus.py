@@ -1,11 +1,17 @@
 from plugandpie.interfaces.Interface import Interface
-
 import smbus
 
 
 class SMBusInterface(Interface):
     def __init__(self, bus_number):
-        self.bus = smbus.SMBus(bus_number)
+        self.bus = smbus.SMBus()
+        self.bus_number = bus_number
+
+    def open(self):
+        self.bus.open(self.bus_number)
+
+    def close(self):
+        self.bus.close()
 
     def write_byte(self, device_address, register_address, byte):
         self.bus.write_byte_data(device_address, register_address, byte)
@@ -20,14 +26,17 @@ class SMBusInterface(Interface):
         return self.bus.read_i2c_block_data(device_address, register_address, number_of_bytes)
 
 
-class SMBusRegister(object):
-    def __init__(self, interface: Interface,  device_address: int, register_address: int):
+class SMBusRegister:
+    def __init__(self, interface,  device_address, register_address):
         self.interface = interface
         self.device_address = device_address
         self.register_address = register_address
+        self.cached_value = None
 
     def set(self, v):
         self.interface.write_byte(self.device_address, self.register_address, v)
+        self.cached_value = v
 
     def get(self):
-        return self.interface.read_byte(self.device_address, self.register_address)
+        self.cached_value = self.interface.read_byte(self.device_address, self.register_address)
+        return self.cached_value
