@@ -31,12 +31,14 @@ class SMBusRegister:
         self.interface = interface
         self.device_address = device_address
         self.register_address = register_address
-        self.cached_value = None
+        self._cached_value = None
 
     def set(self, v):
         self.interface.write_byte(self.device_address, self.register_address, v)
-        self.cached_value = v
+        self._cached_value = v
 
-    def get(self):
-        self.cached_value = self.interface.read_byte(self.device_address, self.register_address)
-        return self.cached_value
+    def get(self, cached=False):
+        if cached and self._cached_value is not None:
+            return self._cached_value
+        self._cached_value = self.interface.read_byte(self.device_address, self.register_address)
+        return self._cached_value

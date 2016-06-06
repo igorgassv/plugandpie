@@ -91,16 +91,16 @@ class MMA8452Q(Accelerometer):
         self.CTRL_REG1.set(0)
 
     def activate(self):
-        self.CTRL_REG1.set(self.CTRL_REG1.cached_value | CTRL_REG1_SET_ACTIVE)
+        self.CTRL_REG1.set(self.CTRL_REG1.get(cached=True) | CTRL_REG1_SET_ACTIVE)
 
     def standby(self):
-        self.CTRL_REG1.set(self.CTRL_REG1.cached_value & ~CTRL_REG1_SET_ACTIVE)
+        self.CTRL_REG1.set(self.CTRL_REG1.get(cached=True) & ~CTRL_REG1_SET_ACTIVE)
 
     def set_g_range(self, g_range):
         g_ranges = {2: XYZ_DATA_CFG_FSR_2G,
                     4: XYZ_DATA_CFG_FSR_4G,
                     8: XYZ_DATA_CFG_FSR_8G}
-        self.XYZ_DATA_CFG.set(self.XYZ_DATA_CFG.cached_value & 0b11111100 | g_ranges[g_range])
+        self.XYZ_DATA_CFG.set(self.XYZ_DATA_CFG.get(cached=True) & 0b11111100 | g_ranges[g_range])
 
     def set_output_data_rate(self, output_data_rate):
         output_data_rates = {800: CTRL_REG1_ODR_800,
@@ -111,7 +111,7 @@ class MMA8452Q(Accelerometer):
                              12.5: CTRL_REG1_ODR_12_5,
                              6.25: CTRL_REG1_ODR_6_25,
                              1.56: CTRL_REG1_ODR_1_56}
-        self.CTRL_REG1.set(self.CTRL_REG1.cached_value & 0b11100111 | output_data_rates[output_data_rate])
+        self.CTRL_REG1.set(self.CTRL_REG1.get(cached=True) & 0b11100111 | output_data_rates[output_data_rate])
 
     def get_g(self, raw=False, res12=True):
         buf = self.interface.read_bytes(self.i2c_address, 0x00, 7)
@@ -125,7 +125,7 @@ class MMA8452Q(Accelerometer):
 
         if not raw:
             # get range
-            fsr = self.XYZ_DATA_CFG.cached_value & 0x03
+            fsr = self.XYZ_DATA_CFG.get(cached=True) & 0x03
             g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
                         XYZ_DATA_CFG_FSR_4G: 4,
                         XYZ_DATA_CFG_FSR_8G: 8}
