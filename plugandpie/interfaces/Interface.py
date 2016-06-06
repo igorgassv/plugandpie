@@ -1,6 +1,12 @@
 
 
 class Interface:
+    def open(self):
+        raise NotImplementedError()
+
+    def close(self):
+        raise NotImplementedError()
+
     def write_byte(self, device_address, register_address, byte):
         raise NotImplementedError()
 

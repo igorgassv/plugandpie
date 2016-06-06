@@ -4,7 +4,7 @@ from subprocess import check_output
 
 def i2c_addresses():
     address_map = check_output(["i2cdetect", "-y", "1"]).decode("utf-8")
-    return [addr.strip() for addr in re.findall("[0-9A-Fa-f]{2} ", address_map)]
+    return [address.strip() for address in re.findall("[0-9A-Fa-f]{2} ", address_map)]
 
 
 def twos_complement(value, bits):

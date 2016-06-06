@@ -1,7 +1,6 @@
 from plugandpie.common.utils import twos_complement
 from plugandpie.devices.accelerometer.Accelerometer import Accelerometer
-from plugandpie.interfaces.SMBus import SMBusRegister
-from plugandpie.interfaces import interfaces
+from plugandpie.interfaces.SMBus import SMBusInterface, SMBusRegister
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
@@ -36,7 +35,7 @@ XYZ_DATA_CFG_FSR_8G = 0x02
 
 class MMA8452Q(Accelerometer):
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
-        super().__init__(interfaces[i2c_bus])
+        super().__init__(SMBusInterface(i2c_bus))
         self.i2c_address = i2c_address
         self.gravity = gravity
         # registers

@@ -4,7 +4,7 @@ import smbus
 
 class SMBusInterface(Interface):
     def __init__(self, bus_number):
-        self.bus = smbus.SMBus()
+        self.bus = smbus.SMBus(bus_number)
         self.bus_number = bus_number
 
     def open(self):
