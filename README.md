@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) Plug N Pie [![Build Status][bs]][ci] [![Code Quality][cq]][ci] [![Code Coverage][cc]][ci] [![Chat][chat-image]][chat-link]
+# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png) Plug N Pie [![Build Status][bs]][ci] [![Code Quality][cq]][ci] [![Code Coverage][cc]][ci] [![Chat Room][chat-image]][chat-link] [![Documentation Status][docs-image]][docs-link]
 
 ### Installation
 Requires `python-smbus` for Python 3
@@ -25,3 +25,5 @@ exit
 [cc]: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/coverage.png?b=master
 [chat-image]: https://badges.gitter.im/villasv/plugandpie.svg
 [chat-link]: https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+[docs-image]: http://plugpie.readthedocs.io/en/latest/?badge=latest
+[docs-link]: https://readthedocs.org/projects/plugpie/badge/?version=latest
