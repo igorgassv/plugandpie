@@ -13,12 +13,6 @@ class Proxy:
         self._tries = 0
 
     def __getattribute__(self, name):
-        """
-        If attribute is not local to proxy, look at the wrapped object.
-        If wrapped object is still None, wait a little bit and try again.
-        (It might take some time to configure the device drivers after startup)
-        After a number of tries, give up with AttributeError
-        """
         try:
             return object.__getattribute__(self, name)
         except AttributeError:
@@ -34,9 +28,6 @@ class Proxy:
                     plug(self, self._target)
                     return getattr(self, name)
 
-
-accelerometer = Proxy('accelerometer')
-thermometer = Proxy('thermometer')
 
 DEVICES = {}
 

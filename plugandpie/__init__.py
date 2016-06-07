@@ -1,3 +1,5 @@
-from plugandpie.plugnplay import accelerometer
-from plugandpie.plugnplay import thermometer
+from plugandpie.plugnplay import Proxy
+
+accelerometer = Proxy('accelerometer')
+thermometer = Proxy('thermometer')
 
