@@ -80,6 +80,7 @@ class MMA8452Q(Accelerometer):
         self.OFF_X = SMBusRegister(self.interface, i2c_address, 0x2F)
         self.OFF_Y = SMBusRegister(self.interface, i2c_address, 0x30)
         self.OFF_Z = SMBusRegister(self.interface, i2c_address, 0x31)
+        self.init()
 
     def init(self):
         self.standby()
@@ -113,34 +114,25 @@ class MMA8452Q(Accelerometer):
                              1.56: CTRL_REG1_ODR_1_56}
         self.CTRL_REG1.set(self.CTRL_REG1.get(cached=True) & 0b11100111 | output_data_rates[output_data_rate])
 
-    def get_g(self, raw=False, res12=True):
-        buf = self.interface.read_bytes(self.i2c_address, 0x00, 7)
-        # status = buf[0]
-        if res12:
-            x = (buf[1] << 4) | (buf[2] >> 4)
-            y = (buf[3] << 4) | (buf[4] >> 4)
-            z = (buf[5] << 4) | (buf[6] >> 4)
-        else:
-            x, y, z = buf[1], buf[3], buf[5]
-
-        if not raw:
-            # get range
-            fsr = self.XYZ_DATA_CFG.get(cached=True) & 0x03
-            g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
-                        XYZ_DATA_CFG_FSR_4G: 4,
-                        XYZ_DATA_CFG_FSR_8G: 8}
-            g_range = g_ranges[fsr]
-            resolution = 12 if res12 else 8
-            gmul = g_range / (2 ** (resolution - 1))
-            x = twos_complement(x, resolution) * gmul
-            y = twos_complement(y, resolution) * gmul
-            z = twos_complement(z, resolution) * gmul
+    def get_g(self):
+        x = (self.OUT_X_MSB.get() << 4) | (self.OUT_X_LSB.get() >> 4)
+        y = (self.OUT_Y_MSB.get() << 4) | (self.OUT_Y_LSB.get() >> 4)
+        z = (self.OUT_Z_MSB.get() << 4) | (self.OUT_Z_LSB.get() >> 4)
+        fsr = self.XYZ_DATA_CFG.get(cached=True) & 0b00000011
+        g_ranges = {XYZ_DATA_CFG_FSR_2G: 2,
+                    XYZ_DATA_CFG_FSR_4G: 4,
+                    XYZ_DATA_CFG_FSR_8G: 8}
+        g_range = g_ranges[fsr]
+        resolution = 12
+        multiplier = g_range / (2 ** (resolution - 1))
+        x = twos_complement(x, resolution) * multiplier
+        y = twos_complement(y, resolution) * multiplier
+        z = twos_complement(z, resolution) * multiplier
 
         return {'x': x, 'y': y, 'z': z}
 
     def get_ms2(self):
-        """Returns the x, y, z values as a dictionary in SI units (m/s^2)."""
-        xyz = self.get_g(raw=False, res12=True)
+        xyz = self.get_g()
         # multiply each xyz value by the standard gravity value
         return {direction: magnitude * self.gravity
                 for direction, magnitude in xyz.items()}
