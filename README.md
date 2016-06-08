@@ -25,5 +25,5 @@ exit
 [cc]: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/coverage.png?b=master
 [chat-image]: https://badges.gitter.im/villasv/plugandpie.svg
 [chat-link]: https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
-[docs-image]: https://readthedocs.org/projects/plugpie/badge/?version=latest
-[docs-link]: http://plugpie.readthedocs.io/en/latest/?badge=latest
+[docs-image]: https://readthedocs.org/projects/plugandpie/badge/?version=latest
+[docs-link]: http://plugandpie.readthedocs.io/en/latest/?badge=latest
