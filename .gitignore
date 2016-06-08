@@ -1,6 +1,7 @@
 # Visual Studio
 .vs/
 *.pyproj
+*.pyproj.user
 *.sln
 
 # PyCharm
