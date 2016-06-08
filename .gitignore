@@ -1,3 +1,9 @@
+# Visual Studio
+.vs/
+*.pyproj
+*.sln
+
+# PyCharm
 .idea/
 
 # Byte-compiled / optimized / DLL files
