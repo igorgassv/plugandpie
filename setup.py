@@ -2,7 +2,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1-alpha.0'
+VERSION = '0.1-alpha.4'
 
 setup(
     name='plugandpie',
@@ -13,7 +13,8 @@ setup(
     license='GPLv3+',
     url='https://github.com/villasv/plugandpie',
     packages=find_packages(),
-    long_description=open('README.rst').read() + open('CHANGELOG.rst').read(),
+    include_package_data = True,
+    long_description=open('README.rst').read(),
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Programming Language :: Python :: 3",
@@ -21,9 +22,7 @@ setup(
         "Development Status :: 3 - Alpha ",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: System :: Hardware :: Hardware Drivers",
-        "Topic :: System :: Hardware :: Monitoring"
+        "Topic :: Software Development :: Libraries :: Python Modules"
     ],
     keywords='plugandpie plug and play raspberrypi sensor',
 )

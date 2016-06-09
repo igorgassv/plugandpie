@@ -1,6 +1,6 @@
 
 
-class Interface:
+class Interface(object):
     def open(self):
         raise NotImplementedError()
 

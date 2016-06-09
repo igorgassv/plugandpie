@@ -1,8 +1,8 @@
 from plugandpie.interfaces.Interface import Interface
 
 
-class Device:
-    def __init__(self, sensors: list, interface: Interface):
+class Device(object):
+    def __init__(self, sensors, interface):
         self.sensors = sensors
         self.interface = interface
 

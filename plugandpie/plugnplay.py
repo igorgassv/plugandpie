@@ -3,7 +3,7 @@ from plugandpie.common.utils import *
 from plugandpie.devices.mapping import driver_map
 
 
-class Proxy:
+class Proxy(object):
     MAX_TRIES = 5
     TRY_INTERVAL = 0.2
 
@@ -12,27 +12,24 @@ class Proxy:
         self._obj = None
         self._tries = 0
 
-    def __getattribute__(self, name):
-        try:
-            return object.__getattribute__(self, name)
-        except AttributeError:
-            if self._obj is not None:
-                return getattr(self._obj, name)
+    def __getattr__(self, name):
+        if self._obj is not None:
+            return getattr(self._obj, name)
+        else:
+            self._tries += 1
+            if self._tries > 5:
+                self._tries = 0
+                raise AttributeError("Proxy has no wrapped object")
             else:
-                self._tries += 1
-                if self._tries > 5:
-                    self._tries = 0
-                    raise AttributeError("Proxy has no wrapped object plugged")
-                else:
-                    time.sleep(Proxy.TRY_INTERVAL)
-                    plug(self, self._target)
-                    return getattr(self, name)
+                time.sleep(Proxy.TRY_INTERVAL)
+                plug(self, self._target)
+                return getattr(self, name)
 
 
 DEVICES = {}
 
 
-def plug(proxy: Proxy, sensor: str):
+def plug(proxy, sensor):
     addresses = i2c_addresses()
     # Update devices list
     for address in addresses:

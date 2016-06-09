@@ -35,7 +35,7 @@ XYZ_DATA_CFG_FSR_8G = 0x02
 
 class MMA8452Q(Accelerometer):
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
-        super().__init__(SMBusInterface(i2c_bus))
+        super(MMA8452Q, self).__init__(SMBusInterface(i2c_bus))
         self.i2c_address = i2c_address
         self.gravity = gravity
         # registers

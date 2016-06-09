@@ -3,7 +3,7 @@ from plugandpie.devices.Device import Device
 
 class Accelerometer(Device):
     def __init__(self, interface):
-        super().__init__(['accelerometer'], interface)
+        super(Accelerometer, self).__init__(['accelerometer'], interface)
 
     def standby(self):
         raise NotImplementedError()
