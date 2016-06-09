@@ -1,4 +1,4 @@
-.. |pi| image:: https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon.png
+.. |pi| image:: https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon_sm.png
   :width: 30
 
 =================================================================================================
