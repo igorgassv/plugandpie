@@ -1,3 +1,5 @@
+sphinx-apidoc -fMeET ../plugandpie -o api
+
 @ECHO OFF
 
 REM Command file for Sphinx documentation
