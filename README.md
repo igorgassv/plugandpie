@@ -1,4 +1,4 @@
-# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon_sm.png) Plug N Pie [![Build Status][bs]][ci] [![Code Quality][cq]][ci] [![Code Coverage][cc]][ci] [![Documentation Status][docs-image]][docs-link] [![Chat Room][chat-image]][chat-link]
+# ![logo](https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon_sm.png) Plug&Pie [![Build Status][bs]][ci] [![Code Quality][cq]][ci] [![Code Coverage][cc]][ci] [![Documentation Status][docs-image]][docs-link] [![Chat Room][chat-image]][chat-link]
 
 ### Installation
 Requires `python-smbus` for Python 3
