@@ -12,12 +12,12 @@ setup(
     author='Victor Villas',
     author_email='villasv@outlook.com',
     license='GPLv3+',
-    url='https://github.com/villasv/Plutonium',
+    url='https://github.com/villasv/plugandpie',
     packages=find_packages(),
     long_description=open('README.md').read() + open('CHANGELOG.md').read(),
     classifiers=[
-        "License :: OSI Approved :: GNU Affero General Public License v3 or "
-        "later (AGPLv3+)",
+        "License :: OSI Approved :: GNU General Public License v3 or "
+        "later (GPLv3+)",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2",
         "Development Status :: 5 - Production/Stable",
