@@ -1,11 +1,24 @@
+""" This module is responsible for device detection and Proxy configuration
+"""
 import time
-from plugandpie.common.utils import *
+from plugandpie.common.utils import i2c_addresses
 from plugandpie.devices.mapping import driver_map
 
 
 class Proxy(object):
+    """ Implementation of the Proxy Design Pattern.
+    Forwards attribute access to wrapped object.
+    """
     MAX_TRIES = 5
     TRY_INTERVAL = 0.2
+
+    def proxify(self, obj):
+        """ Set the internal object to proxy link
+
+        :param obj:
+        :return:
+        """
+        self._obj = obj
 
     def __init__(self, target):
         self._target = target
@@ -30,6 +43,8 @@ DEVICES = {}
 
 
 def plug(proxy, sensor):
+    """ Finds a sensor to plug in the specified proxy.
+    """
     addresses = i2c_addresses()
     # Update devices list
     for address in addresses:
@@ -39,4 +54,4 @@ def plug(proxy, sensor):
     # Plug any device that has the required sensor
     for device in DEVICES.values():
         if sensor in device.sensors:
-            proxy._obj = device
+            proxy.proxify(device)
