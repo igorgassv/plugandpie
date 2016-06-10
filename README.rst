@@ -1,6 +1,6 @@
-===============================================================================
+===========================================
 |pi| Plug&Pie |bs| |qs| |cc| |rtd| |gitter|
-===============================================================================
+===========================================
 
 The ``plugandpie`` package goal is to simplify the process of setting up and using sensors with Raspberry Pi.
 Just by importing the package, if your sensor interface has a "device driver" available (community contribution) and it gives no ambiguity, you are ready to go.
@@ -34,7 +34,7 @@ After plugging your sensors and verifying that its data is accessible, life is a
 ``plugandpie`` also aims to provide utilities for monitoring and analyzing sensors, so you can make software-level polling and set up complex observation models. For example, calling some function if the acceleration gets too high or automatically dump sensor data fine-grained to milliseconds.
 
 Installation: |pipv| |pipstatus|  |pipl| |pippyversions| |pipdm|
--------------------------------------------------------------------------------
+----------------------------------------------------------------
 ``plugandpie`` requires ``SMBus``, which at this time has no good Python 3 implementation or bindings. A workaround can be found at https://procrastinative.ninja/2014/07/21/smbus-for-python34-on-raspberry/
 
 Also, ``SMBus`` requires repeated starts in the ``i2c`` driver. This is not enabled by default on Raspberry Pi and can be fixed with:
