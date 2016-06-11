@@ -1,6 +1,11 @@
 plugandpie package
 ==================
 
+.. automodule:: plugandpie
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -13,19 +18,7 @@ Subpackages
 Submodules
 ----------
 
-plugandpie.plugnplay module
----------------------------
+.. toctree::
 
-.. automodule:: plugandpie.plugnplay
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   plugandpie.plugnplay
 
-
-Module contents
----------------
-
-.. automodule:: plugandpie
-    :members:
-    :undoc-members:
-    :show-inheritance:
