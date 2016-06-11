@@ -4,8 +4,8 @@ Standard sensor accessors:
 - accelerometer
 - thermometer
 """
-from plugandpie.plugnplay import Proxy
+from plugandpie.device.Proxy import Proxy
 
-accelerometer = Proxy('accelerometer')
+accelerometer = Proxy('accelerometers')
 thermometer = Proxy('thermometer')
 

@@ -1,8 +1,9 @@
 """ Device driver implementation for the MMA8452Q accelerometer chip by Freescale
 """
 from plugandpie.common.utils import twos_complement
-from plugandpie.devices.accelerometer.Accelerometer import Accelerometer
-from plugandpie.interfaces.SMBus import SMBusInterface, SMBusRegister
+from plugandpie.device import Accelerometer
+from plugandpie.interface.Interface import Register
+from plugandpie.interface.SMBus import SMBusInterface
 
 DEFAULT_I2C_BUS = 1
 DEFAULT_I2C_ADDRESS = 0x1d
@@ -36,7 +37,7 @@ XYZ_DATA_CFG_FSR_8G = 0x02
 
 
 class MMA8452Q(Accelerometer):
-    """ Device Driver for Freescale's MMA8452Q accelerometer chip.
+    """ Device Driver for Freescale's MMA8452Q accelerometers chip.
     http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf
     """
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
@@ -44,47 +45,47 @@ class MMA8452Q(Accelerometer):
         self.i2c_address = i2c_address
         self.gravity = gravity
         # registers
-        self.register['STATUS'] = SMBusRegister(self.interface, i2c_address, 0x00)
-        self.register['OUT_X_MSB'] = SMBusRegister(self.interface, i2c_address, 0x01)
-        self.register['OUT_X_LSB'] = SMBusRegister(self.interface, i2c_address, 0x02)
-        self.register['OUT_Y_MSB'] = SMBusRegister(self.interface, i2c_address, 0x03)
-        self.register['OUT_Y_LSB'] = SMBusRegister(self.interface, i2c_address, 0x04)
-        self.register['OUT_Z_MSB'] = SMBusRegister(self.interface, i2c_address, 0x05)
-        self.register['OUT_Z_LSB'] = SMBusRegister(self.interface, i2c_address, 0x06)
-        self.register['SYSMOD'] = SMBusRegister(self.interface, i2c_address, 0x0B)
-        self.register['INT_SOURCE'] = SMBusRegister(self.interface, i2c_address, 0x0C)
-        self.register['WHO_AM_I'] = SMBusRegister(self.interface, i2c_address, 0x0D)
-        self.register['XYZ_DATA_CFG'] = SMBusRegister(self.interface, i2c_address, 0x0E)
-        self.register['HP_FILTER_CUTOFF'] = SMBusRegister(self.interface, i2c_address, 0x0F)
-        self.register['PL_STATUS'] = SMBusRegister(self.interface, i2c_address, 0x10)
-        self.register['PL_CFG'] = SMBusRegister(self.interface, i2c_address, 0x11)
-        self.register['PL_COUNT'] = SMBusRegister(self.interface, i2c_address, 0x12)
-        self.register['PL_BF_ZCOMP'] = SMBusRegister(self.interface, i2c_address, 0x13)
-        self.register['P_L_THS_REG'] = SMBusRegister(self.interface, i2c_address, 0x14)
-        self.register['FF_MT_CFG'] = SMBusRegister(self.interface, i2c_address, 0x15)
-        self.register['FF_MT_SRC1'] = SMBusRegister(self.interface, i2c_address, 0x16)
-        self.register['FF_MT_SRC2'] = SMBusRegister(self.interface, i2c_address, 0x17)
-        self.register['FF_MT_COUNT'] = SMBusRegister(self.interface, i2c_address, 0x18)
-        self.register['TRANSIENT_CFG'] = SMBusRegister(self.interface, i2c_address, 0x1D)
-        self.register['TRANSIENT_THS'] = SMBusRegister(self.interface, i2c_address, 0x1F)
-        self.register['TRANSIENT_COUNT'] = SMBusRegister(self.interface, i2c_address, 0x20)
-        self.register['PULSE_CFG'] = SMBusRegister(self.interface, i2c_address, 0x21)
-        self.register['PULSE_SRC'] = SMBusRegister(self.interface, i2c_address, 0x22)
-        self.register['PULSE_THSX'] = SMBusRegister(self.interface, i2c_address, 0x23)
-        self.register['PULSE_THSY'] = SMBusRegister(self.interface, i2c_address, 0x24)
-        self.register['PULSE_THSZ'] = SMBusRegister(self.interface, i2c_address, 0x25)
-        self.register['PULSE_TMLT'] = SMBusRegister(self.interface, i2c_address, 0x26)
-        self.register['PULSE_LTCY'] = SMBusRegister(self.interface, i2c_address, 0x27)
-        self.register['PULSE_WIND'] = SMBusRegister(self.interface, i2c_address, 0x28)
-        self.register['ASLP_COUNT'] = SMBusRegister(self.interface, i2c_address, 0x29)
-        self.register['CTRL_REG1'] = SMBusRegister(self.interface, i2c_address, 0x2A)
-        self.register['CTRL_REG2'] = SMBusRegister(self.interface, i2c_address, 0x2B)
-        self.register['CTRL_REG3'] = SMBusRegister(self.interface, i2c_address, 0x2C)
-        self.register['CTRL_REG4'] = SMBusRegister(self.interface, i2c_address, 0x2D)
-        self.register['CTRL_REG5'] = SMBusRegister(self.interface, i2c_address, 0x2E)
-        self.register['OFF_X'] = SMBusRegister(self.interface, i2c_address, 0x2F)
-        self.register['OFF_Y'] = SMBusRegister(self.interface, i2c_address, 0x30)
-        self.register['OFF_Z'] = SMBusRegister(self.interface, i2c_address, 0x31)
+        self.register['STATUS'] = Register(self.interface, i2c_address, 0x00)
+        self.register['OUT_X_MSB'] = Register(self.interface, i2c_address, 0x01)
+        self.register['OUT_X_LSB'] = Register(self.interface, i2c_address, 0x02)
+        self.register['OUT_Y_MSB'] = Register(self.interface, i2c_address, 0x03)
+        self.register['OUT_Y_LSB'] = Register(self.interface, i2c_address, 0x04)
+        self.register['OUT_Z_MSB'] = Register(self.interface, i2c_address, 0x05)
+        self.register['OUT_Z_LSB'] = Register(self.interface, i2c_address, 0x06)
+        self.register['SYSMOD'] = Register(self.interface, i2c_address, 0x0B)
+        self.register['INT_SOURCE'] = Register(self.interface, i2c_address, 0x0C)
+        self.register['WHO_AM_I'] = Register(self.interface, i2c_address, 0x0D)
+        self.register['XYZ_DATA_CFG'] = Register(self.interface, i2c_address, 0x0E)
+        self.register['HP_FILTER_CUTOFF'] = Register(self.interface, i2c_address, 0x0F)
+        self.register['PL_STATUS'] = Register(self.interface, i2c_address, 0x10)
+        self.register['PL_CFG'] = Register(self.interface, i2c_address, 0x11)
+        self.register['PL_COUNT'] = Register(self.interface, i2c_address, 0x12)
+        self.register['PL_BF_ZCOMP'] = Register(self.interface, i2c_address, 0x13)
+        self.register['P_L_THS_REG'] = Register(self.interface, i2c_address, 0x14)
+        self.register['FF_MT_CFG'] = Register(self.interface, i2c_address, 0x15)
+        self.register['FF_MT_SRC1'] = Register(self.interface, i2c_address, 0x16)
+        self.register['FF_MT_SRC2'] = Register(self.interface, i2c_address, 0x17)
+        self.register['FF_MT_COUNT'] = Register(self.interface, i2c_address, 0x18)
+        self.register['TRANSIENT_CFG'] = Register(self.interface, i2c_address, 0x1D)
+        self.register['TRANSIENT_THS'] = Register(self.interface, i2c_address, 0x1F)
+        self.register['TRANSIENT_COUNT'] = Register(self.interface, i2c_address, 0x20)
+        self.register['PULSE_CFG'] = Register(self.interface, i2c_address, 0x21)
+        self.register['PULSE_SRC'] = Register(self.interface, i2c_address, 0x22)
+        self.register['PULSE_THSX'] = Register(self.interface, i2c_address, 0x23)
+        self.register['PULSE_THSY'] = Register(self.interface, i2c_address, 0x24)
+        self.register['PULSE_THSZ'] = Register(self.interface, i2c_address, 0x25)
+        self.register['PULSE_TMLT'] = Register(self.interface, i2c_address, 0x26)
+        self.register['PULSE_LTCY'] = Register(self.interface, i2c_address, 0x27)
+        self.register['PULSE_WIND'] = Register(self.interface, i2c_address, 0x28)
+        self.register['ASLP_COUNT'] = Register(self.interface, i2c_address, 0x29)
+        self.register['CTRL_REG1'] = Register(self.interface, i2c_address, 0x2A)
+        self.register['CTRL_REG2'] = Register(self.interface, i2c_address, 0x2B)
+        self.register['CTRL_REG3'] = Register(self.interface, i2c_address, 0x2C)
+        self.register['CTRL_REG4'] = Register(self.interface, i2c_address, 0x2D)
+        self.register['CTRL_REG5'] = Register(self.interface, i2c_address, 0x2E)
+        self.register['OFF_X'] = Register(self.interface, i2c_address, 0x2F)
+        self.register['OFF_Y'] = Register(self.interface, i2c_address, 0x30)
+        self.register['OFF_Z'] = Register(self.interface, i2c_address, 0x31)
         self.init()
 
     def init(self):

@@ -11,15 +11,3 @@ class Device(object):
         self.sensors = sensors
         self.interface = interface
         self.register = {}
-
-    def standby(self):
-        """Put device on standby for control operations"""
-        raise NotImplementedError()
-
-    def activate(self):
-        """Put device on operational mode for measurements"""
-        raise NotImplementedError()
-
-    def reset(self):
-        """Resets the device control options"""
-        raise NotImplementedError()

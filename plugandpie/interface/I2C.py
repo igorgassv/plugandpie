@@ -4,7 +4,7 @@ import posix
 from fcntl import ioctl
 
 import plugandpie.common.i2c as i2c
-from plugandpie.interfaces.Interface import Interface
+from plugandpie.interface.Interface import Interface
 
 DEFAULT_BUS = 1
 
