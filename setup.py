@@ -2,7 +2,7 @@ import sys
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1-alpha.4'
+VERSION = '0.1-alpha.5'
 
 setup(
     name='plugandpie',
@@ -17,12 +17,12 @@ setup(
     long_description=open('README.rst').read(),
     classifiers=[
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 2.7",
         "Development Status :: 3 - Alpha ",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
-    keywords='plugandpie plug and play raspberrypi sensor',
+    keywords='plugandpie plug and play raspberry pi sensors',
 )
