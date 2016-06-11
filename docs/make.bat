@@ -1,4 +1,4 @@
-sphinx-apidoc -fMeET ../plugandpie -o api
+sphinx-apidoc -f ../plugandpie -o api
 
 @ECHO OFF
 

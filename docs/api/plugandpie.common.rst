@@ -1,16 +1,30 @@
 plugandpie.common package
 =========================
 
-.. automodule:: plugandpie.common
+Submodules
+----------
+
+plugandpie.common.i2c module
+----------------------------
+
+.. automodule:: plugandpie.common.i2c
     :members:
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
+plugandpie.common.utils module
+------------------------------
 
-.. toctree::
+.. automodule:: plugandpie.common.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-   plugandpie.common.i2c
-   plugandpie.common.utils
 
+Module contents
+---------------
+
+.. automodule:: plugandpie.common
+    :members:
+    :undoc-members:
+    :show-inheritance:

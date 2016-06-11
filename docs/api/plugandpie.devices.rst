@@ -1,11 +1,6 @@
 plugandpie.devices package
 ==========================
 
-.. automodule:: plugandpie.devices
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Subpackages
 -----------
 
@@ -16,8 +11,27 @@ Subpackages
 Submodules
 ----------
 
-.. toctree::
+plugandpie.devices.Device module
+--------------------------------
 
-   plugandpie.devices.Device
-   plugandpie.devices.mapping
+.. automodule:: plugandpie.devices.Device
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
+plugandpie.devices.mapping module
+---------------------------------
+
+.. automodule:: plugandpie.devices.mapping
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: plugandpie.devices
+    :members:
+    :undoc-members:
+    :show-inheritance:

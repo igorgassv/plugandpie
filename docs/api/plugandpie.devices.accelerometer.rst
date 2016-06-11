@@ -1,16 +1,30 @@
 plugandpie.devices.accelerometer package
 ========================================
 
-.. automodule:: plugandpie.devices.accelerometer
+Submodules
+----------
+
+plugandpie.devices.accelerometer.Accelerometer module
+-----------------------------------------------------
+
+.. automodule:: plugandpie.devices.accelerometer.Accelerometer
     :members:
     :undoc-members:
     :show-inheritance:
 
-Submodules
-----------
+plugandpie.devices.accelerometer.MMA8452Q module
+------------------------------------------------
 
-.. toctree::
+.. automodule:: plugandpie.devices.accelerometer.MMA8452Q
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-   plugandpie.devices.accelerometer.Accelerometer
-   plugandpie.devices.accelerometer.MMA8452Q
 
+Module contents
+---------------
+
+.. automodule:: plugandpie.devices.accelerometer
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,5 +1,10 @@
 # Makefile for Sphinx documentation
-#
+
+.PHONY: buildapi
+buildapi:
+	sphinx-apidoc -f ../plugandpie -o api
+	@echo "Auto-generation of API documentation finished. " \
+		"The generated files are in 'api/'"
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
