@@ -1,7 +1,9 @@
+""" Inter-Integrated Circuit interface implementation module
+"""
 import posix
 from fcntl import ioctl
 
-from plugandpie.common.i2c import *
+import plugandpie.common.i2c as i2c
 from plugandpie.interfaces.Interface import Interface
 
 DEFAULT_BUS = 1
@@ -38,7 +40,7 @@ class I2CInterface(Interface):
         self.open()
         return self
 
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
     def open(self, extra_open_flags=0):
@@ -71,9 +73,9 @@ class I2CInterface(Interface):
         """
 
         msg_count = len(msgs)
-        msg_array = (i2c_msg*msg_count)(*msgs)
-        ioctl_arg = i2c_rdwr_ioctl_data(msgs=msg_array, nmsgs=msg_count)
+        msg_array = (i2c.i2c_msg*msg_count)(*msgs)
+        ioctl_arg = i2c.i2c_rdwr_ioctl_data(msgs=msg_array, nmsgs=msg_count)
 
-        ioctl(self.fd, I2C_RDWR, ioctl_arg)
+        ioctl(self.fd, i2c.I2C_RDWR, ioctl_arg)
 
-        return [i2c_msg_to_bytes(m) for m in msgs if (m.flags & I2C_M_RD)]
+        return [i2c.i2c_msg_to_bytes(m) for m in msgs if m.flags & i2c.I2C_M_RD]
