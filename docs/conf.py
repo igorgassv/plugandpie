@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#
+import unittest.mock as mock
+import sys
+
 # Plug&Pie documentation build configuration file, created by
 # sphinx-quickstart on Wed Jun  8 11:42:49 2016.
 #
@@ -39,6 +41,11 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
+
+# Mock libraries not present on dev environment
+MOCK_MODULES = ['smbus', 'posix', 'fcntl']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
