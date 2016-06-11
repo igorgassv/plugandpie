@@ -36,6 +36,9 @@ XYZ_DATA_CFG_FSR_8G = 0x02
 
 
 class MMA8452Q(Accelerometer):
+    """ Device Driver for Freescale's MMA8452Q accelerometer chip.
+    http://cache.freescale.com/files/sensors/doc/data_sheet/MMA8452Q.pdf
+    """
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
         super(MMA8452Q, self).__init__(SMBusInterface(i2c_bus))
         self.i2c_address = i2c_address
@@ -85,21 +88,45 @@ class MMA8452Q(Accelerometer):
         self.init()
 
     def init(self):
+        """
+        Set some default configurations for the device:
+        - output data rate: 800Hz
+        - g range: 2
+        :return:
+        """
         self.standby()
         self.set_output_data_rate(800)  # Hz
         self.set_g_range(2)
         self.activate()
 
     def reset(self):
+        """
+        Reset the CTRL_REG1 register with 0x00
+        :return:
+        """
         self.register['CTRL_REG1'].set(0)
 
     def activate(self):
+        """
+        Set the ACTIVE bit on the CTRL_REG1 register
+        :return:
+        """
         self.register['CTRL_REG1'].set(self.register['CTRL_REG1'].get(cached=True) | CTRL_REG1_SET_ACTIVE)
 
     def standby(self):
+        """
+        Unset the ACTIVE bit on the CTRL_REG1 register
+        :return:
+        """
         self.register['CTRL_REG1'].set(self.register['CTRL_REG1'].get(cached=True) & ~CTRL_REG1_SET_ACTIVE)
 
     def set_g_range(self, g_range):
+        """
+        Sets the [FS1, FS0] bits of the XZY_DATA_CFG register, defining the g range in which
+        the sensor should output its measurements.
+        :param g_range: one of [0x00, 0x01, 0x02] for ranges of [2, 4, 8] respectively
+        :return:
+        """
         g_ranges = {2: XYZ_DATA_CFG_FSR_2G,
                     4: XYZ_DATA_CFG_FSR_4G,
                     8: XYZ_DATA_CFG_FSR_8G}
@@ -107,6 +134,12 @@ class MMA8452Q(Accelerometer):
         self.register['XYZ_DATA_CFG'].set(previous & 0b11111100 | g_ranges[g_range])
 
     def set_output_data_rate(self, output_data_rate):
+        """
+        Sets the [DR2,DR1,DR0] bits of the CTRL_REG1 register, defining the data rate of measurements.
+        :param output_data_rate: one of range(0x01<<3), (0x08<<3)) for rates of
+            [800, 400, 200, 100, 50, 12.5, 6.25, 1.5625] respectively
+        :return:
+        """
         output_data_rates = {800: CTRL_REG1_ODR_800,
                              400: CTRL_REG1_ODR_400,
                              200: CTRL_REG1_ODR_200,
@@ -119,6 +152,11 @@ class MMA8452Q(Accelerometer):
         self.register['CTRL_REG1'].set(previous & 0b11100111 | output_data_rates[output_data_rate])
 
     def get_g(self):
+        """
+        Consult the acceleration given the g range scale, with 12-bit resolution given by
+        the registers [OUT_[axis]_MSB, OUT_[axis]_LSB]
+        :return: a dictionary with acceleration on each axis scaled by the g range set on the sensor
+        """
         x = (self.register['OUT_X_MSB'].get() << 4) | (self.register['OUT_X_LSB'].get() >> 4)
         y = (self.register['OUT_Y_MSB'].get() << 4) | (self.register['OUT_Y_LSB'].get() >> 4)
         z = (self.register['OUT_Z_MSB'].get() << 4) | (self.register['OUT_Z_LSB'].get() >> 4)
@@ -136,6 +174,10 @@ class MMA8452Q(Accelerometer):
         return {'x': x, 'y': y, 'z': z}
 
     def get_ms2(self):
+        """
+        Consult the acceleration like in :get_g:, but doing the conversion for SI units.
+        :return: a dictionary with acceleration on each axis in ms^2
+        """
         xyz = self.get_g()
         # multiply each xyz value by the standard gravity value
         return {direction: magnitude * self.gravity
