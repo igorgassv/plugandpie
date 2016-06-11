@@ -2,7 +2,7 @@
 """
 import time
 from plugandpie.common.utils import i2c_addresses
-from plugandpie.devices.mapping import driver_map
+from plugandpie.devices.mapping import DRIVER_MAP
 
 
 class Proxy(object):
@@ -49,7 +49,7 @@ def plug(proxy, sensor):
     # Update devices list
     for address in addresses:
         if address not in DEVICES.keys():
-            device = driver_map[address]()
+            device = DRIVER_MAP[address]()
             DEVICES[address] = device
     # Plug any device that has the required sensor
     for device in DEVICES.values():
