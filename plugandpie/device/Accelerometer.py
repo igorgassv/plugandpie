@@ -1,13 +1,13 @@
 """ This module contains the Accelerometer(Device) interface definition.
 """
-from plugandpie.device.Device import Device
+from plugandpie.device.Device import Device, Sensor
 
 
 class Accelerometer(Device):
-    """ This class represents a device with accelerometers capabilities.
+    """ This class represents a device with accelerometer capabilities.
     """
-    def __init__(self, interface):
-        super(Accelerometer, self).__init__(['accelerometers'], interface)
+    def __init__(self, interface, address):
+        super(Accelerometer, self).__init__([Sensor.ACCELEROMETER], interface, address)
 
     def standby(self):
         raise NotImplementedError()
