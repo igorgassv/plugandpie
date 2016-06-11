@@ -1,21 +1,21 @@
 """ This module is responsible for device detection and Proxy configuration
 """
-from plugandpie.common.utils import i2c_addresses
-from plugandpie.drivers.mapping import DRIVER_MAP
+import re
+from subprocess import check_output
 
-DEVICES = {}
+I2C_DEVICES = {}
+SPI_DEVICES = {}
 
 
-def plug(proxy, sensor):
-    """ Finds a sensor to plug in the specified proxy.
+def i2c_detect():
     """
-    addresses = i2c_addresses()
-    # Update device list
+    Uses i2c-tools to parse all I2C addresses connected
+    """
+    i2tool_output = check_output(["i2cdetect", "-y", "1"]).decode("utf-8")
+    addresses = [address.strip() for address in re.findall("[0-9A-Fa-f]{2} ", i2tool_output)]
     for address in addresses:
-        if address not in DEVICES.keys():
-            device = DRIVER_MAP[address]()
-            DEVICES[address] = device
-    # Plug any device that has the required sensor
-    for device in DEVICES.values():
-        if sensor in device.sensors:
-            proxy.wrap(device)
+        I2C_DEVICES[address] = None
+
+
+def spi_detect():
+    pass

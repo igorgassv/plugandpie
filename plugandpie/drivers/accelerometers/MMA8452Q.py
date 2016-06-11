@@ -41,7 +41,6 @@ class MMA8452Q(Accelerometer):
     """
     def __init__(self, i2c_bus=DEFAULT_I2C_BUS, i2c_address=DEFAULT_I2C_ADDRESS, gravity=9.80665):
         super(MMA8452Q, self).__init__(SMBusInterface(i2c_bus), i2c_address)
-        self.i2c_address = i2c_address
         self.gravity = gravity
         # registers
         self.register['STATUS'] = Register(self, 0x00)
