@@ -1,7 +1,7 @@
-plugandpie.plugnplay module
+plugandpie.discovery module
 ===========================
 
-.. automodule:: plugandpie.plugnplay
+.. automodule:: plugandpie.discovery
     :members:
     :undoc-members:
     :show-inheritance:

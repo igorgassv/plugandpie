@@ -1,7 +1,7 @@
-plugandpie.devices package
+plugandpie.drivers package
 ==========================
 
-.. automodule:: plugandpie.devices
+.. automodule:: plugandpie.drivers
     :members:
     :undoc-members:
     :show-inheritance:
@@ -11,13 +11,12 @@ Subpackages
 
 .. toctree::
 
-    plugandpie.devices.accelerometer
+    plugandpie.drivers.accelerometers
 
 Submodules
 ----------
 
 .. toctree::
 
-   plugandpie.devices.Device
-   plugandpie.devices.mapping
+   plugandpie.drivers.mapping
 

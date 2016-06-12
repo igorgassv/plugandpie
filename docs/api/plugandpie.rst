@@ -12,13 +12,14 @@ Subpackages
 .. toctree::
 
     plugandpie.common
-    plugandpie.devices
-    plugandpie.interfaces
+    plugandpie.device
+    plugandpie.drivers
+    plugandpie.interface
 
 Submodules
 ----------
 
 .. toctree::
 
-   plugandpie.plugnplay
+   plugandpie.discovery
 

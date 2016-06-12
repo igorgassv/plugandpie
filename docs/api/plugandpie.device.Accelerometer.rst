@@ -1,7 +1,7 @@
-plugandpie.interfaces.Interface module
+plugandpie.device.Accelerometer module
 ======================================
 
-.. automodule:: plugandpie.interfaces.Interface
+.. automodule:: plugandpie.device.Accelerometer
     :members:
     :undoc-members:
     :show-inheritance:

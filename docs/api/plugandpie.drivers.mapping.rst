@@ -1,7 +1,7 @@
-plugandpie.devices.mapping module
+plugandpie.drivers.mapping module
 =================================
 
-.. automodule:: plugandpie.devices.mapping
+.. automodule:: plugandpie.drivers.mapping
     :members:
     :undoc-members:
     :show-inheritance:
