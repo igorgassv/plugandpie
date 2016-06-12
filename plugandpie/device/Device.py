@@ -18,8 +18,9 @@ class Device(object):
     The device should have a list of sensor tags that define its purpose
     and the dictionary of registers.
     """
-    def __init__(self, sensors, interface, address):
-        self.sensors = sensors
+    sensors = []
+
+    def __init__(self, interface, address):
         self.interface = interface
         self.address = address
         self.register = {}

@@ -21,8 +21,8 @@ class Proxy(object):
         """
         self._device = device
 
-    def __init__(self, tag):
-        self._tag = tag
+    def __init__(self, sensor):
+        self.wanted_sensor = sensor
         self._device = None
         self._tries = 0
 
@@ -36,5 +36,5 @@ class Proxy(object):
                 raise AttributeError("Proxy's target device not configured")
             else:
                 time.sleep(Proxy.TRY_INTERVAL)
-                Proxy.RESOLVE()
+                Proxy.RESOLVE(self)
                 return getattr(self, name)

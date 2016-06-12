@@ -6,8 +6,10 @@ from plugandpie.device.Device import Device, Sensor
 class Accelerometer(Device):
     """ This class represents a device with accelerometer capabilities.
     """
+    sensors = [Sensor.ACCELEROMETER]
+
     def __init__(self, interface, address):
-        super(Accelerometer, self).__init__([Sensor.ACCELEROMETER], interface, address)
+        super(Accelerometer, self).__init__(interface, address)
 
     def standby(self):
         raise NotImplementedError()
