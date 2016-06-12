@@ -1,8 +1,16 @@
+"""
+This module implements the SMBus(Interface) class
+"""
 from plugandpie.interface.Interface import Interface
 import smbus
 
 
 class SMBusInterface(Interface):
+    """
+    This class implements the SMBus interface for read/write access through the SMBus protocol.
+    It is based on I2C and therefore use the same bus, but requires repeated starts on the
+    I2C driver from the master.
+    """
     def __init__(self, bus_number):
         self.bus = smbus.SMBus(bus_number)
         self.bus_number = bus_number
