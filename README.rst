@@ -47,8 +47,8 @@ This configuration resets on boot, so make sure to put this in a startup script.
 
 .. |pi| image:: https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon_sm.png
   :width: 30
-.. |bs| image:: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/build.png?b=master
-  :target: https://scrutinizer-ci.com/g/villasv/plugandpie/?branch=master
+.. |bs| image:: https://travis-ci.org/villasv/plugandpie.svg?branch=master
+  :target: https://travis-ci.org/villasv/plugandpie
 .. |qs| image:: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/quality-score.png?b=master
   :target: https://scrutinizer-ci.com/g/villasv/plugandpie/?branch=master
 .. |cc| image:: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/coverage.png?b=master
