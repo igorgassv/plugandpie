@@ -27,7 +27,7 @@ def spi_detect():
     Analyse the SPI interface for connected devices
     """
     logging.debug("Searching for new SPI devices...")
-    logging.error("NOT IMPLEMENTED")
+    logging.error("SPI discovery was not implemented!")
     pass
 
 
