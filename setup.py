@@ -1,4 +1,3 @@
-import sys
 from setuptools import setup, find_packages
 
 
@@ -25,4 +24,11 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
     keywords='plugandpie plug and play raspberry pi sensors',
+    install_requires=[
+    ],
+    extras_require={
+        ':python_version < "3.4"': [
+            'enum34'
+        ]
+    }
 )
