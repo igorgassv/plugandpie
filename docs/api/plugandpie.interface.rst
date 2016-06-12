@@ -14,4 +14,5 @@ Submodules
    plugandpie.interface.I2C
    plugandpie.interface.Interface
    plugandpie.interface.SMBus
+   plugandpie.interface.SPI
 
