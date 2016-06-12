@@ -1,5 +1,5 @@
 ===========================================
-|pi| Plug&Pie |bs| |qs| |cc| |rtd| |gitter|
+|pi| Plug&Pie |qs| |bs| |cc| |rtd| |gitter|
 ===========================================
 
 The ``plugandpie`` package goal is to simplify the process of setting up and using sensors with Raspberry Pi.
@@ -47,16 +47,17 @@ This configuration resets on boot, so make sure to put this in a startup script.
 
 .. |pi| image:: https://raw.githubusercontent.com/villasv/plugandpie/master/docs/icon_sm.png
   :width: 30
-.. |bs| image:: https://travis-ci.org/villasv/plugandpie.svg?branch=master
-  :target: https://travis-ci.org/villasv/plugandpie
 .. |qs| image:: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/quality-score.png?b=master
   :target: https://scrutinizer-ci.com/g/villasv/plugandpie/?branch=master
-.. |cc| image:: https://scrutinizer-ci.com/g/villasv/plugandpie/badges/coverage.png?b=master
-  :target: https://scrutinizer-ci.com/g/villasv/plugandpie/?branch=master
+.. |bs| image:: https://travis-ci.org/villasv/plugandpie.svg?branch=master
+  :target: https://travis-ci.org/villasv/plugandpie
+.. |cc| image:: https://coveralls.io/repos/github/villasv/plugandpie/badge.svg?branch=master
+  :target: https://coveralls.io/github/villasv/plugandpie?branch=master
 .. |rtd| image:: https://readthedocs.org/projects/plugandpie/badge/?version=latest
   :target: http://plugandpie.readthedocs.io/en/latest/?badge=latest
 .. |gitter| image:: https://badges.gitter.im/villasv/plugandpie.svg
   :target: https://gitter.im/villasv/plugandpie?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+
 .. |pipdm| image:: https://img.shields.io/pypi/dm/plugandpie.svg
   :target: https://pypi.python.org/pypi/plugandpie
 .. |pipv| image:: https://img.shields.io/pypi/v/plugandpie.svg
