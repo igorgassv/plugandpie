@@ -94,6 +94,9 @@ class MMA8452Q(Accelerometer):
         :return:
         """
         self.standby()
+        # Force clear some controls
+        self.register['CTRL_REG1'].set(0)
+        self.register['XYZ_DATA_CFG'].set(0)
         self.set_output_data_rate(800)  # Hz
         self.set_g_range(2)
         self.activate()
@@ -130,7 +133,7 @@ class MMA8452Q(Accelerometer):
                     4: XYZ_DATA_CFG_FSR_4G,
                     8: XYZ_DATA_CFG_FSR_8G}
         previous = self.register['XYZ_DATA_CFG'].get(cached=True)
-        self.register['XYZ_DATA_CFG'].set(previous & 0b11111100 | g_ranges[g_range])
+        self.register['XYZ_DATA_CFG'].set(previous | g_ranges[g_range])
 
     def set_output_data_rate(self, output_data_rate):
         """
