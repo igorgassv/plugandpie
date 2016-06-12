@@ -11,6 +11,7 @@ class Proxy(object):
     """
     MAX_TRIES = 5
     TRY_INTERVAL = 0.2
+    RESOLVE = None
 
     def wrap(self, device):
         """ Set the internal object to proxy link
@@ -35,4 +36,5 @@ class Proxy(object):
                 raise AttributeError("Proxy's target device not configured")
             else:
                 time.sleep(Proxy.TRY_INTERVAL)
+                Proxy.RESOLVE()
                 return getattr(self, name)
