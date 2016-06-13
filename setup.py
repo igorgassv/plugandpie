@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-VERSION = '0.1-alpha.5'
+VERSION = '0.1-alpha.6'
 
 setup(
     name='plugandpie',
